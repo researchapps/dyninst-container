@@ -31,7 +31,7 @@ jobs:
       - name: Set Organization Name for Packages Registry
         env:
           org: ${{ github.event.repository.owner.login }}
-        run: echo "org=${org}" >> ${GITHUB_END}
+        run: echo "org=${org}" >> $GITHUB_ENV
 
       - name: Build Test Container
         run: docker build -f Dockerfile.test --build-arg dyninst_base=ghcr.io/${org}/dyninst-ubuntu-${{ matrix.ubuntu }}:latest -t dyninst-test .

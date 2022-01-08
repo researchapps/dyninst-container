@@ -19,7 +19,7 @@ RUN . /opt/spack/share/spack/setup-env.sh && \
 # This will fail the container build (and job) given any errors
 # And we likely need to add cmake flags to treat warnings as errors
 RUN mkdir -p build && \
-    perl /opt/testsuite/scripts/build/build.pl --hostname=ci-github --quiet --no-run-tests --restart=build --njobs=2 --dyninst-src=/code --test-src=/opt/testsuite 
+    perl /opt/testsuite/scripts/build/build.pl --hostname=ci-github --quiet --no-run-tests --restart=build --njobs=2 --dyninst-src=/code --test-src=/opt/testsuite && \
     perl /opt/testsuite/scripts/build/build.pl --hostname=ci-github --quiet --restart=build --ntestjobs=1 --nompthreads=2 --dyninst-src=/code --test-src=/opt/testsuite 
 
 # Upload results to dashboard

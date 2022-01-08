@@ -1,0 +1,31 @@
+ARG dyninst_base=ghcr.io/dyninst/dyninst-ubuntu-20.04:latest
+FROM ${dyninst_base}
+
+# docker build --build-arg dyninst_base=ghcr.io/dyninst/dyninst-ubuntu-20.04:latest -t dyninst-test .
+
+# TODO update code here via dyninst source, if needed
+# ADD . /code
+
+# Clone dyninst tests
+RUN git clone https://github.com/dyninst/testsuite /opt/testsuite
+
+# Previous WORKDIR, just to be careful - reinstall dyninst if needed
+# Thenbuild and run the test suite
+WORKDIR /opt/dyninst-env
+RUN . /opt/spack/share/spack/setup-env.sh && \
+    spack env activate . && \
+    spack install --reuse && \
+    mkdir -p build && \
+    perl /opt/testsuite/scripts/build/build.pl --hostname=ci-github --quiet \
+        --no-run-tests --restart=build --njobs=2 --dyninst-src=/code --test-src=/opt/testsuite && \
+    perl /opt/testsuite/scripts/build/build.pl --hostname=ci-github --quiet \
+        --restart=build --ntestjobs=1 --nompthreads=2 --dyninst-src=/code --test-src=/opt/testsuite 
+
+# Upload results to dashboard
+# TODO need to discuss how we want this to work! It's not advisable to have a test result uploaded for a PR. 
+# and if we want the results in the CI, we need a terminal output equivalent.
+# perl testsuite/scripts/build/build.pl --hostname=ci-github --quiet --restart=build --upload --auth-token=14bb4ad2d33e1fa292c0561b7dad8232
+# It would be amazing if we could have the CI pipeline report the dashboard results, but I'm not sure how that would work.
+
+
+

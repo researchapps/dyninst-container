@@ -16,9 +16,9 @@ RUN . /opt/spack/share/spack/setup-env.sh && \
     spack env activate . && \
     spack install --reuse && \
     mkdir -p build && \
-    perl /opt/testsuite/scripts/build/build.pl --hostname=ci-github --quiet \
+    perl /opt/testsuite/scripts/build/build.pl --hostname=ci-github --debug-mode \
         --no-run-tests --restart=build --njobs=2 --dyninst-src=/code --test-src=/opt/testsuite && \
-    perl /opt/testsuite/scripts/build/build.pl --hostname=ci-github --quiet \
+    perl /opt/testsuite/scripts/build/build.pl --hostname=ci-github --debug-mode \
         --restart=build --ntestjobs=1 --nompthreads=2 --dyninst-src=/code --test-src=/opt/testsuite 
 
 # Upload results to dashboard

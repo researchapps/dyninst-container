@@ -43,13 +43,13 @@ jobs:
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /opt/ghc
 
-      - name: Pull Layers for "Cache"
-        run: docker pull ghcr.io/dyninst/dyninst-ubuntu-${{ matrix.ubuntu }}:latest || echo "No cache available"
-
       - name: Set Organization Name for Packages Registry
         env:
           org: ${{ github.event.repository.owner.login }}
         run: echo "org=${org}" >> ${GITHUB_ENV}
+
+      - name: Pull Layers for "Cache"
+        run: docker pull ghcr.io/${org}/dyninst-ubuntu-${{ matrix.ubuntu }}:latest || echo "No cache available"
 
       - name: Build Dyninst Base Container
         run: |

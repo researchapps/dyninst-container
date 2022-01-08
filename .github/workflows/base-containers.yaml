@@ -61,6 +61,7 @@ jobs:
                         -t ghcr.io/${org}/dyninst-ubuntu-${{ matrix.ubuntu }}:latest .
 
       - name: Build Test Container
+        run:
            docker build --build-arg dyninst_base=ghcr.io/dyninst/dyninst-ubuntu-${{ matrix.ubuntu }}:latest \
                         -t dyninst-test .
 
@@ -73,4 +74,5 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy
+        if: (github.event_name != 'pull_request')
         run: docker push ghcr.io/${org}/dyninst-ubuntu-${{ matrix.ubuntu }}:latest

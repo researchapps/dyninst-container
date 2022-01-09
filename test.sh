@@ -18,7 +18,7 @@ printf "⭐️ Preparing to build the testsuite\n"
 cd /opt/dyninst-env/
 mkdir -p build/testsuite/tests
 cd build/testsuite
-cmake -H/opt/testsuite -B. -DCMAKE_INSTALL_PREFIX=tests > >(tee config.out) 2> >(tee config.err >&2)
+cmake -H/opt/testsuite -B. -DDyninst_DIR=/opt/dyninst-env/build/dyninst/lib/cmake/Dyninst -DCMAKE_INSTALL_PREFIX=tests > >(tee config.out) 2> >(tee config.err >&2)
 make VERBOSE=1 -j2 > >(tee build.out) 2> >(tee build.err >&2)
 make install VERBOSE=1 -j2 > >(tee build-install.out) 2> >(tee build-install.err >&2
 

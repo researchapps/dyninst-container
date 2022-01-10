@@ -17,7 +17,15 @@ make VERBOSE=1 -j2 > >(tee build.out) 2> >(tee build.err >&2)
 make install VERBOSE=1 -j2 > >(tee build-install.out) 2> >(tee build-install.err >&2)
 echo "::endgroup::"
 
-# 2. Build the test suite
+# 2. Update the test suite
+printf "⭐️ Updating the testsuite\n"
+echo "::group::update testsuite"   
+cd /opt/testsuite
+git pull origin master
+cd -
+echo "::endgroup::"
+
+# 3. Build the test suite
 printf "⭐️ Preparing to build the testsuite\n"
 echo "::group::build tests"   
 cd /opt/dyninst-env/

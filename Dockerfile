@@ -96,6 +96,9 @@ RUN spack external find cmake && \
 RUN git clone -b ${DYNINST_BRANCH} https://github.com/dyninst/dyninst /code
 WORKDIR /code
 
+# Add test code to base container so we can build tests here
+RUN git clone https://github.com/dyninst/testsuite /opt/testsuite
+
 # Install Dyninst to its own view
 WORKDIR /opt/dyninst-env
 RUN . /opt/spack/share/spack/setup-env.sh && \
@@ -115,3 +118,7 @@ RUN . /opt/spack/share/spack/setup-env.sh && \
     spack add libiberty@${LIBIBERTY_VERSION} && \
     spack add intel-tbb@${INTELTBB_VERSION} && \
     spack install --reuse
+    
+# Build tests (but don't run)
+COPY ./build.sh build.sh
+RUN /bin/bash build.sh

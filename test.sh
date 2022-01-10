@@ -16,11 +16,14 @@ make install VERBOSE=1 -j2 > >(tee build-install.out) 2> >(tee build-install.err
 echo "::endgroup::"
 
 # 2. Build the test suite
+# TODO need to pull changes for testsuite
 printf "⭐️ Preparing to build the testsuite\n"
 echo "::group::build tests"   
 cd /opt/dyninst-env/
 mkdir -p build/testsuite/tests
 cd build/testsuite
+
+# TODO add -DCMAKE_INSTALL_PREFIX=$PWD/tests
 cmake -H/opt/testsuite -B. -DDyninst_DIR=/opt/dyninst-env/build/dyninst/lib/cmake/Dyninst > >(tee config.out) 2> >(tee config.err >&2)
 make VERBOSE=1 -j2 > >(tee build.out) 2> >(tee build.err >&2)
 make install VERBOSE=1 -j2 > >(tee build-install.out) 2> >(tee build-install.err >&2)

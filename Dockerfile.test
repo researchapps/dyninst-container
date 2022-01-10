@@ -9,6 +9,8 @@ FROM ${dyninst_base}
 # Add testing script to run
 COPY ./test.sh /opt/dyninst-env/test.sh
 
+RUN apt-get update && apt-get install -y tree
+
 # Clone dyninst tests
 RUN git clone https://github.com/dyninst/testsuite /opt/testsuite
 

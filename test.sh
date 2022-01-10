@@ -18,20 +18,17 @@ printf "⭐️ Preparing to build the testsuite\n"
 cd /opt/dyninst-env/
 mkdir -p build/testsuite/tests
 cd build/testsuite
-cmake -H/opt/testsuite -B. -DDyninst_DIR=/opt/dyninst-env/build/dyninst/lib/cmake/Dyninst -DCMAKE_INSTALL_PREFIX=tests > >(tee config.out) 2> >(tee config.err >&2)
+cmake -H/opt/testsuite -B. -DDyninst_DIR=/opt/dyninst-env/build/dyninst/lib/cmake/Dyninst > >(tee config.out) 2> >(tee config.err >&2)
 make VERBOSE=1 -j2 > >(tee build.out) 2> >(tee build.err >&2)
 make install VERBOSE=1 -j2 > >(tee build-install.out) 2> >(tee build-install.err >&2)
 
 # 3. Run the tests
 printf "⭐️ Running tests...\n"
-cd /opt/dyninst-env/build/testsuite/tests
-tree .
+cd /opt/dyninst-env/build/testsuite
 export DYNINSTAPI_RT_LIB=/opt/dyninst-env/build/dyninst/lib/libdyninstAPI_RT.so
 export OMP_NUM_THREADS=2
 export LD_LIBRARY_PATH=/opt/dyninst-env/build/dyninst/lib:$PWD:$LD_LIBRARY_PATH
 ./runTests -64 -all -log test.log -j1 #> >(tee stdout.log) 2> >(tee stderr.log >&2)
-
-# 1>stdout.log 2>stderr.log                                     
 
 # Run the build script to collect and process the logs then upload them
 # cd /opt/dyninst-env                                                                                   && \

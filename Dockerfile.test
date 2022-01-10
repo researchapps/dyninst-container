@@ -1,15 +1,13 @@
 ARG dyninst_base=ghcr.io/dyninst/dyninst-ubuntu-20.04:latest
 FROM ${dyninst_base}
 
-# docker build --build-arg dyninst_base=ghcr.io/dyninst/dyninst-ubuntu-20.04:latest -t dyninst-test .
+# docker build --build-arg dyninst_base=ghcr.io/dyninst/dyninst-ubuntu-20.04:latest -f Dockerfile.test -t dyninst-test .
 
 # TODO update code here via dyninst source, if needed
 # COPY . /code
 
 # Add testing script to run
 COPY ./test.sh /opt/dyninst-env/test.sh
-
-RUN apt-get update && apt-get install -y tree
 
 # Clone dyninst tests
 RUN git clone https://github.com/dyninst/testsuite /opt/testsuite

@@ -10,10 +10,8 @@ FROM ${dyninst_base}
 COPY ./build.sh /opt/dyninst-env/build.sh
 COPY ./test.sh /opt/dyninst-env/test.sh
 
-# Clone dyninst tests
-RUN git clone https://github.com/dyninst/testsuite /opt/testsuite
-
 # Previous WORKDIR, just to be careful - reinstall dyninst if needed
 # Thenbuild and run the test suite
 WORKDIR /opt/dyninst-env
-RUN /bin/bash test.sh
+RUN /bin/bash build.sh && \
+    /bin/bash test.sh

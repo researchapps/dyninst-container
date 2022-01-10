@@ -44,9 +44,14 @@ jobs:
           sudo rm -rf /opt/ghc
 
       - name: Set Organization Name for Packages Registry
+        if: (github.event_name != 'schedule')
         env:
           org: ${{ github.event.repository.owner.login }}
         run: echo "org=${org}" >> ${GITHUB_ENV}
+
+      - name: Set Organization Name for Packages Registry
+        if: (github.event_name == 'schedule')
+        run: echo "org=researchapps" >> ${GITHUB_ENV}
 
       - name: Pull Layers for "Cache"
         run: docker pull ghcr.io/${org}/dyninst-ubuntu-${{ matrix.ubuntu }}:latest || echo "No cache available"

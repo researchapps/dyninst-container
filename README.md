@@ -168,5 +168,12 @@ libsymLite.so           libsymLite.so.11.0      libsymLite.so.11.0.1    libsymta
 
 ## Test
 
-**to be added!**
+To build the test container, you'll want to use [Dockerfile.test](Dockerfile.test). If you want to use
+the base dyninst container from GitHub packages, leave out build args (it will default to this). Otherwise, if you want to use a container you just built, specify that as the build arg `dyninst_base`:
 
+```bash
+$ docker build -f Dockerfile.test --build-arg dyninst_base=dyninst -t dyninst-test .
+```
+
+The tests are added and run during build, so if they fail inside the container, the container build will fail
+(and trigger any CI building it to fail).

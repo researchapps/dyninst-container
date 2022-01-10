@@ -35,6 +35,3 @@ jobs:
 
       - name: Build Test Container
         run: docker build -f Dockerfile.test --build-arg dyninst_base=ghcr.io/${org}/dyninst-ubuntu-${{ matrix.ubuntu }}:latest -t dyninst-test .
-
-      - name: Test Dyninst
-        run: docker run dyninst-test

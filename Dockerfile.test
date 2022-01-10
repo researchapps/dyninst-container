@@ -6,7 +6,8 @@ FROM ${dyninst_base}
 # TODO update code here via dyninst source, if needed
 # COPY . /code
 
-# Add testing script to run
+# Add testing and build script to run
+COPY ./build.sh /opt/dyninst-env/build.sh
 COPY ./test.sh /opt/dyninst-env/test.sh
 
 # Clone dyninst tests

@@ -120,4 +120,5 @@ RUN . /opt/spack/share/spack/setup-env.sh && \
     spack install --reuse
     
 # Build tests (but don't run)
+COPY ./build.sh build.sh
 RUN /bin/bash build.sh
